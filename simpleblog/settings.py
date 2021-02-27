@@ -28,7 +28,7 @@ SECRET_KEY = '*cmxq#!9mts!s+p+!8ria^=8f+$7)q4=la2gb$ra)*aiw!b1c2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['duetian.herokuapp.com']
 
 
 # Application definition
