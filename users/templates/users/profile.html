@@ -1,0 +1,50 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+		<div class="content-section">
+			<div class="media">
+				<img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+				<div class="media-body">
+					<h2 class="account-heading">{{ user.username }}</h2>
+					<p class="text-secondary">{{ user.email }}</p>
+				</div>
+			</div>
+			<form method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+					<fieldset class="form-group">
+							<legend class="border-bottom mb-4">Profile Info</legend>
+							{{ u_form|crispy }}
+							{{ p_form|crispy }}
+					</fieldset>
+					<div class="form-group">
+							<button class="btn btn-outline-info" type="submit">Update</button>
+					</div>
+			</form>
+		</div>
+
+		<h1 class="mb-3">Posts by {{ user.username }}</h1>
+		<h1 class="mb-3">Total Posts: {{ total_posts }}</h1>
+		{% for post in posts %}
+				<article class="media content-section">
+					<img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+					<div class="media-body">
+						<div class="article-metadata">
+							<a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+							<small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+							<span id="text-right" class="text-muted">{{ post.category }}</span>
+						</div>
+						<h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+						<p class="article-content">{{ post.content }}</p>
+						<div class="container">
+							<div class="row">
+								<div class="col">
+									<hr>
+									<h6><a class="article-title" href="{% url 'post-detail' post.id %}">Comments: {{ post.comments.count }}</a></h6>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</article>
+		{% endfor %}
+{% endblock %}
